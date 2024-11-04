@@ -45,10 +45,9 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Email</th>
+                                        <th class="text-center">Nama Lengkap</th>
                                         <th class="text-center">Username</th>
-                                        <th class="text-center">Name</th>
                                         <th class="text-center">Nomor Handphone</th>
-                                        <th class="text-center">Password</th>
                                         <th class="text-center">Role</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -56,43 +55,40 @@
                                 <tbody>
                                     <?php
                                     $no = 1;
-                                    foreach ($user as $key => $value) {
+                                    if (is_array($user) || !empty($user)) {
+                                        foreach ($user as $key => $value) {
                                     ?>
-                                        <tr>
-                                            <td class="text-center"><?= $no++ ?></td>
-                                            <td class="text-center"><?= $value->email ?></td>
-                                            <td class="text-center"><?= $value->username?></td>
-                                            <td class="text-center"><?= $value->name ?></td>
-                                            <td class="text-center"><?= $value->nomor_hp ?></td>
-                                            <td class="text-center"><?= md5($value->password) ?></td>
+                                            <tr>
+                                                <td class="text-center"><?= $no++ ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value->email) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value->name) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value->username) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value->nomor_hp) ?></td>
 
-                                            <td class="text-center">
-												<?php
-													// Check the ENUM value directly and display the corresponding badge
-													switch ($value->role) {
-														case 'Admin':
-															echo '<span class="badge badge-success">ADMIN</span>';
-															break;
-														case 'Super':
-															echo '<span class="badge badge-warning">SUPER</span>';
-															break;
-														case 'User':
-															echo '<span class="badge badge-danger">USER</span>';
-															break;	
-														default:
-															echo '<span class="badge badge-secondary">Unknown</span>'; // For any unexpected value
-															break;
-													}
-												?>
-											</td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <a href="<?= base_url('Admin/cKelolaData/deleteuser/' . $value->id_user) ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                    <button type="button" data-toggle="modal" data-target="#edit<?= $value->id_user ?>" class="btn btn-warning"><i class="fas fa-edit"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                <td class="text-center">
+                                                    <?php
+                                                    if ($value->role == 'SUPER') {
+                                                        echo '<span class="badge badge-primary">SUPER</span>';
+                                                    } elseif ($value->role == 'ADMIN') {
+                                                        echo '<span class="badge badge-success">ADMIN</span>';
+                                                    } elseif ($value->role == 'VIEWER') {
+                                                        echo '<span class="badge badge-warning">USER</span>';
+                                                    } else {
+                                                        echo '<span class="badge badge-secondary">Unknown</span>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="<?= base_url('Admin/cKelolaData/deleteuser/' . $value->id) ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <button type="button" data-toggle="modal" data-target="#edit<?= $value->id ?>" class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                     <?php
+                                        }
+                                    } else {
+                                        echo '<tr><td colspan="8" class="text-center">Data Tidak Ditemukan</td></tr>';
                                     }
                                     ?>
 
@@ -100,12 +96,11 @@
 
                                 <tfoot>
                                     <tr>
-									<th class="text-center">No</th>
+                                        <th class="text-center">No</th>
                                         <th class="text-center">Email</th>
+                                        <th class="text-center">Nama Lengkap</th>
                                         <th class="text-center">Username</th>
-                                        <th class="text-center">Name</th>
                                         <th class="text-center">Nomor Handphone</th>
-                                        <th class="text-center">Password</th>
                                         <th class="text-center">Role</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -140,32 +135,30 @@
                         <label for="exampleInputEmail1">Email</label>
                         <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required>
                     </div>
-					<div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="username" required>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nama Lengkap</label>
+                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="username" required>
                     </div>
-					<div class="form-group">
-                        <label for="exampleInputEmail1">Nama</label>
-                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Nama anda" required>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Nama anda" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">No Telepon</label>
-                        <input type="text" name="nomor_hp" class="form-control" maxlength="13" minlength="11" id="exampleInputEmail1" placeholder="No Telepon" required>
+                        <input type="text" name="nomor_hp" class="form-control" maxlength="13" minlength="10" id="exampleInputEmail1" placeholder="No Telepon" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Password</label>
                         <input type="password" name="password" class="form-control" id="exampleInputEmail1" placeholder="password" required>
                     </div>
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">Role</label>
-						<select class="form-control" name="role" required>
-						<option value="">--Pilih Role---</option>
-						<option value="Admin">Admin</option>
-						<option value="Super">Super</option>
-						<option value="User">User</option>
-					</select>
-
+                        <select class="form-control" name="role" required>
+                            <option value="">--Pilih Role---</option>
+                            <option value="SUPER">SUPER</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="VIEWER">USER</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -182,9 +175,9 @@
 <?php
 foreach ($user as $key => $value) {
 ?>
-    <div class="modal fade" id="edit<?= $value->id_user ?>">
+    <div class="modal fade" id="edit<?= $value->id ?>">
         <div class="modal-dialog">
-            <form action="<?= base_url('admin/ckeloladata/updateuser/' . $value->id_user) ?>" method="POST">
+            <form action="<?= base_url('admin/ckeloladata/updateuser/' . $value->id) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Update Data User</h4>
@@ -197,10 +190,11 @@ foreach ($user as $key => $value) {
                             <label for="exampleInputEmail1">Email</label>
                             <input type="email" name="email" value="<?= $value->email ?>" class="form-control" id="exampleInputEmail1" placeholder="email" required>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Username</label>
                             <input type="text" name="username" value="<?= $value->username ?>" class="form-control" id="exampleInputEmail1" placeholder="Nama User" required>
-                        </div><div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Nama</label>
                             <input type="text" name="name" value="<?= $value->name ?>" class="form-control" id="exampleInputEmail1" placeholder="Nama User" required>
                         </div>
@@ -216,15 +210,15 @@ foreach ($user as $key => $value) {
                             <label for="exampleInputEmail1">Role</label>
                             <select class="form-control" name="role" required>
                                 <option value="">--Pilih Role---</option>
-                                <option value="1" <?php if ($value->role == 'Admin') {
-                                                        echo 'selected';
-                                                    } ?>>Admin</option>
-                                <option value="2" <?php if ($value->role == 'Super') {
-                                                        echo 'selected';
-                                                    } ?>>Super</option>
-								<option value="3" <?php if ($value->role == 'User') {
-                                                        echo 'selected';
-                                                    } ?>>User</option>
+                                <option value="SUPER" <?php if ($value->role == 'SUPER') {
+                                                            echo 'selected';
+                                                        } ?>>Super Admin</option>
+                                <option value="ADMIN" <?php if ($value->role == 'ADMIN') {
+                                                            echo 'selected';
+                                                        } ?>>Admin</option>
+                                <option value="VIEWER" <?php if ($value->role == 'VIEWER') {
+                                                            echo 'selected';
+                                                        } ?>>User</option>
                             </select>
                         </div>
                     </div>

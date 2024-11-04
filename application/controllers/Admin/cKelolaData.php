@@ -83,7 +83,7 @@ class cKelolaData extends CI_Controller
     //barang
     public function tablet()
     {
-        $token = $this->session->userdata('token'); 
+        $token = $this->session->userdata('token');
         $apiUrl = $this->config->item('api_url') . '/tab/';
 
         $headers = array(
@@ -186,49 +186,151 @@ class cKelolaData extends CI_Controller
     //user
     public function user()
     {
-        $data = array(
-            // 'user' => $this->mKelolaData->select_user()
+        $token = $this->session->userdata('token'); // Get JWT token from session
+        $apiUrl = $this->config->item('api_url') . '/user/';
+        // $apiUrl = 'http://localhost:3000/user';
+
+        // Siapkan header untuk request
+        $headers = array(
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json',
         );
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data = array(
+            'user' => json_decode($response)
+        );
+
         $this->load->view('Admin/Layout/head');
         $this->load->view('Admin/Layout/aside');
         $this->load->view('Admin/user/vuser', $data);
         $this->load->view('Admin/Layout/footer');
     }
+
+    public function currentuser()
+    {
+        $token = $this->session->userdata('token'); // Get JWT token from session
+        $apiUrl = $this->config->item('api_url') . '/user/me';
+
+        // Set up headers for the request
+        $headers = array(
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json',
+        );
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $user = json_decode($response);
+
+        // Pass the user data to the views
+        $data = array(
+            'user' => $user
+        );
+
+        $this->load->view('Admin/Layout/head');
+        $this->load->view('Admin/Layout/aside', $data); // Pass $data here
+        $this->load->view('Admin/user/vuser', $data);
+        $this->load->view('Admin/Layout/footer');
+    }
+
+
     public function createuser()
     {
-        $data = array(
-            'email' => $this->input->post('email'),
-            'username' => $this->input->post('username'),
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/user';
+
+        $postData = json_encode(array(
             'name' => $this->input->post('name'),
             'nomor_hp' => $this->input->post('nomor_hp'),
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
             'password' => $this->input->post('password'),
-            'role' => $this->input->post('role'),
-        );
-        // $this->mKelolaData->insert_user($data);
+            'role' => $this->input->post('role')
+        ));
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $token
+        ));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+
+        curl_exec($ch);
+        curl_close($ch);
+
         $this->session->set_flashdata('success', 'Data User Berhasil Disimpan!');
         redirect('Admin/cKelolaData/user');
     }
+
     public function updateuser($id)
     {
-        $data = array(
-            'email' => $this->input->post('email'),
-            'username' => $this->input->post('username'),
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/user/' . $id;
+        // $apiUrl = 'http://localhost:3000/user/' . $id;
+
+        $postData = json_encode(array(
             'name' => $this->input->post('name'),
             'nomor_hp' => $this->input->post('nomor_hp'),
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
             'password' => $this->input->post('password'),
-            'role' => $this->input->post('role'),
-        );
-        // $this->mKelolaData->updateuser($id, $data);
+            'role' => $this->input->post('role')
+        ));
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $token
+        ));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+
+        curl_exec($ch);
+        curl_close($ch);
+
         $this->session->set_flashdata('success', 'Data User Berhasil Diperbaharui!');
         redirect('Admin/cKelolaData/user');
     }
+
     public function deleteuser($id)
     {
-        // $this->mKelolaData->delete($id);
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/user/' . $id;
+        // $apiUrl = 'http://localhost:3000/user/' . $id;
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $token
+        ));
+
+        curl_exec($ch);
+        curl_close($ch);
+
         $this->session->set_flashdata('success', 'Data User Berhasil Dihapus!');
         redirect('Admin/cKelolaData/user');
     }
-
 
     //transaksi
     public function transaksi()
