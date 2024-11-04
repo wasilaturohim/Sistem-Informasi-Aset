@@ -4,69 +4,69 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class mKelolaData extends CI_Model
 {
     //kategori
-    public function select_kategori()
+    public function select_pegawai()
     {
         $this->db->select('*');
-        $this->db->from('kategori');
+        $this->db->from('pegawai');
         return $this->db->get()->result();
     }
-    public function insert_kategori($data)
+    public function insert_pegawai($data)
     {
-        $this->db->insert('kategori', $data);
+        $this->db->insert('pegawai', $data);
     }
     public function updatekategori($id, $data)
     {
-        $this->db->where('id_kategori', $id);
-        $this->db->update('kategori', $data);
+        $this->db->where('nip_pegawai', $id);
+        $this->db->update('pegawai', $data);
     }
-    public function deletekategori($id)
+    public function deletepegawai($id)
     {
-        $this->db->where('id_kategori', $id);
-        $this->db->delete('kategori');
+        $this->db->where('nip_pegawai', $id);
+        $this->db->delete('pegawai');
     }
 
     //barang
-    public function select_barang()
+    public function select_tablet()
     {
         $this->db->select('*');
-        $this->db->from('barang');
+        $this->db->from('tablet');
         return $this->db->get()->result();
     }
-    public function insert_barang($data)
+    public function insert_tablet($data)
     {
-        $this->db->insert('barang', $data);
+        $this->db->insert('tablet', $data);
     }
-    public function updatebarang($id, $data)
+    public function updatetablet($id, $data)
     {
-        $this->db->where('id_barang', $id);
-        $this->db->update('barang', $data);
+        $this->db->where('imei_tab', $id);
+        $this->db->update('tablet', $data);
     }
-    public function deletebarang($id)
+    public function deletetablet($id)
     {
-        $this->db->where('id_barang', $id);
-        $this->db->delete('barang');
+        $this->db->where('imei_tab', $id);
+        $this->db->delete('tablet');
     }
 
-    //lokasi
-    public function select_lokasi()
+    //transaksi
+    public function select_transaksi()
     {
         $this->db->select('*');
-        $this->db->from('lokasi_asset');
+        $this->db->from('transaksi');
         return $this->db->get()->result();
     }
-    public function insert_lokasi($data)
+    public function insert_transaksi($data)
     {
-        $this->db->insert('lokasi_asset', $data);
+        $this->db->insert('transaksi', $data);
     }
-    public function updatelokasi($id, $data)
+    public function updatetransaksi($id, $data)
     {
-        $this->db->where('id_lokasi', $id);
-        $this->db->update('lokasi_asset', $data);
+        $this->db->where('id_transaksi', $id);
+        $this->db->update('transaksi', $data);
     }
-    public function deletelokasi($id)
+    public function deletetransaksi($id)
     {
-        $this->db->where('id_lokasi', $id);
-        $this->db->delete('lokasi_asset');
+        $this->db->where('id_transaksi', $id);
+        $this->db->delete('transaksi');
     }
 
     //user
@@ -90,6 +90,26 @@ class mKelolaData extends CI_Model
         $this->db->where('id_user', $id);
         $this->db->delete('user');
     }
+	 // Metode untuk mengambil semua data tablet berdasarkan IMEI
+	 public function get_all_tablets()
+	 {
+		 $this->db->select('imei_tab');
+		 $this->db->from('tablet'); // Sesuaikan nama tabel dengan nama tabel tablet di database Anda
+		 return $this->db->get()->result();
+	 }
+ 
+	 // Metode untuk mengambil semua data pegawai berdasarkan NIP
+	 public function get_all_pegawai()
+	 {
+		 $this->db->select('nip_pegawai');
+		 $this->db->from('pegawai'); // Sesuaikan nama tabel dengan nama tabel pegawai di database Anda
+		 return $this->db->get()->result();
+	 }
+	 public function get_user_by_id($user_id)
+{
+    return $this->db->get_where('user', ['id' => $user_id])->row();
+}
+
 }
 
 /* End of file mKelolaData.php */

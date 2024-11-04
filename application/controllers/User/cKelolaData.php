@@ -11,12 +11,21 @@ class cKelolaData extends CI_Controller
         $this->load->model('mKelolaData');
     }
 
+	public function dashboard()
+	{
+		$user_id = $this->session->userdata('id_user'); // Ambil ID user dari session
+		$data['user'] = $this->mKelolaData->get_user_by_id($user_id); // Mendapatkan data user berdasarkan ID
+		$this->load->view('Admin/Layout/head');
+		$this->load->view('Admin/Layout/aside');
+		$this->load->view('Admin/dashboard', $data); // Mengirim data ke view
+		$this->load->view('Admin/Layout/footer');
+	}
+
 
     public function pegawai()
     {
         $data = array(
-            'pegawai' => $this->mKelolaData->select_pegawai(),
-            'tablet' => $this->mKelolaData->get_all_tablets()
+            'pegawai' => $this->mKelolaData->select_pegawai()
         );
         $this->load->view('Admin/Layout/head');
         $this->load->view('Admin/Layout/aside');

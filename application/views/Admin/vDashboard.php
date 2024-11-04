@@ -1,186 +1,111 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark-bold">Dashboard</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="cDashboard.php">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Info boxes -->
-            <div class="row">
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Tab Diterima</span>
-                            <span class="info-box-number">
-                                <?= $jml['monitoring']->jml_monitoring ?>
-                            </span>
-                        </div>
-                        <!-- /.info-box-content -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMq+0Z2BOPsSOazC3Pa3cxD5U5bxDIkmNBt3s" crossorigin="anonymous">
+    <!-- Tambahkan stylesheet lain di sini -->
+</head>
+<body>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark-bold">Dashboard</h1>
                     </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Tab Dikembalikan</span>
-                            <span class="info-box-number"> <?= $jml['pengajuan']->jml_pengajuan ?></span>
-                        </div>
-                        <!-- /.info-box-content -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="cDashboard.php">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
                     </div>
-                    <!-- /.info-box -->
                 </div>
-                <!-- /.col -->
-
-                <!-- fix for small devices only -->
-                <div class="clearfix hidden-md-up"></div>
-
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-barcode"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Tab Lengkap</span>
-                            <span class="info-box-number"> <?= $jml['asset']->jml_asset ?></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Tab Tidak Lengkap</span>
-                            <span class="info-box-number"> <?= $jml['user']->jml_user ?></span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
-
-
-
-            <!-- Main row -->
-            <div class="row">
-                <!-- Left col -->
-                <div class="col-md-8">
-                    <!-- MAP & BOX PANE -->
-
-
-                    <!-- TABLE: LATEST ORDERS -->
-                    <div class="card">
-                        <div class="card-header border-transparent">
-                            <h3 class="card-title">Status Pengajuan</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">No</th>
-                                            <th class="text-center">Tanggal Pengajuan</th>
-                                            <th class="text-center">Nama Barang Pengajuan</th>
-                                            <th class="text-center">Total Pengajuan</th>
-                                            <th class="text-center">Status Pengajuan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $no = 1;
-                                        foreach ($pengajuan as $key => $value) {
-                                        ?>
-                                            <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $value->tgl_pengajuan ?></td>
-                                                <td><?= $value->nama_barang ?></td>
-                                                <td><?= $value->total_pengajuan ?></td>
-                                                <td class="text-center"><?php if ($value->status_pengajuan == '0') {
-                                                                        ?>
-                                                        <span class="badge badge-warning">Menunggu Konfirmasi Kepala Desa</span>
-                                                    <?php
-                                                                        } else if ($value->status_pengajuan == '1') {
-                                                    ?>
-                                                        <span class="badge badge-info">Asset Keputusan</span>
-                                                    <?php
-                                                                        } else if ($value->status_pengajuan == '2') {
-                                                    ?>
-                                                        <span class="badge badge-success">Selesai</span>
-                                                    <?php
-                                                                        } else {
-                                                    ?>
-                                                        <span class="badge badge-danger">Ditolak!</span>
-                                                    <?php
-                                                                        } ?>
-                                                </td>
-
-                                            </tr>
-                                        <?php
-                                        }
-                                        ?>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <a href="<?= base_url('Admin/cPengajuan') ?>" class="btn btn-sm btn-info float-left">Lihat Pengajuan</a>
-                        </div>
-                        <!-- /.card-footer -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
-
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
         </div>
-        <!--/. container-fluid -->
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Info boxes -->
+                <div class="row">
+                    <!-- Info box 1 -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tab Diterima</span>
+                                <span class="info-box-number"><?= isset($jml['monitoring']) ? $jml['monitoring']->jml_monitoring : '0' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Info box 2 -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-reply"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tab Dikembalikan</span>
+                                <span class="info-box-number"><?= isset($jml['pengajuan']) ? $jml['pengajuan']->jml_pengajuan : '0' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Info box 3 -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tab Lengkap</span>
+                                <span class="info-box-number"><?= isset($jml['asset']) ? $jml['asset']->jml_asset : '0' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Info box 4 -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tab Tidak Lengkap</span>
+                                <span class="info-box-number"><?= isset($jml['user']) ? $jml['user']->jml_user : '0' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Info box 5 -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-check-circle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tab Berfungsi</span>
+                                <span class="info-box-number"><?= isset($jml['berfungsi']) ? $jml['berfungsi']->jml_berfungsi : '0' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Info box 6 -->
+                    <div class="col-12 col-sm-6 col-md-4">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-secondary elevation-1"><i class="fas fa-times-circle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tab Tidak Berfungsi</span>
+                                <span class="info-box-number"><?= isset($jml['tidak_berfungsi']) ? $jml['tidak_berfungsi']->jml_tidak_berfungsi : '0' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Main row -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- MAP & BOX PANE -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</body>
+</html>
