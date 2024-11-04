@@ -45,41 +45,6 @@ class cKelolaData extends CI_Controller
         $this->load->view('Admin/Layout/footer');
     }
 
-    public function createpegawai()
-    {
-        $data = array(
-            'nip_pegawai' => $this->input->post('nip_pegawai'),
-            'nama_pegawai' => $this->input->post('nama_pegawai'),
-            'jabatan' => $this->input->post('jabatan'),
-            'satker_1' => $this->input->post('satker_1'),
-            'satker_2' => $this->input->post('satker_2'),
-            'tmt' => $this->input->post('tmt')
-        );
-        $this->mKelolaData->insert_pegawai($data);
-        $this->session->set_flashdata('success', 'Data Pegawai Berhasil Disimpan!');
-        redirect('Admin/cKelolaData/pegawai');
-    }
-    public function updatepegawai($id)
-    {
-        $data = array(
-            'nip_pegawai' => $this->input->post('nip'),
-            'nama_pegawai' => $this->input->post('nama'),
-            'jabatan' => $this->input->post('jabatan'),
-            'satker_1' => $this->input->post('satker_1'),
-            'satker_2' => $this->input->post('satker_2'),
-            'tmt' => $this->input->post('tmt'),
-        );
-        // $this->mKelolaData->updatepegawai($id, $data);
-        $this->session->set_flashdata('success', 'Data Pegawai Berhasil Update!');
-        redirect('Admin/cKelolaData/pegawai');
-    }
-    public function deletepegawai($id)
-    {
-        // $this->mKelolaData->deletepegawai($id);
-        $this->session->set_flashdata('success', 'Data Pegawai Berhasil Dihapus!');
-        redirect('Admin/cKelolaData/pegawai');
-    }
-
     //barang
     public function tablet()
     {
@@ -113,75 +78,6 @@ class cKelolaData extends CI_Controller
         $this->load->view('Admin/Tablet/vtablet', $data);
         $this->load->view('Admin/Layout/footer');
     }
-
-    public function createtablet()
-    {
-        $data = array(
-            'imei_tab' => $this->input->post('imei'),
-            'device' => $this->input->post('device'),
-            'no_bmn' => $this->input->post('no_bmn'),
-        );
-        // $this->mKelolaData->insert_tablet($data);
-        $this->session->set_flashdata('success', 'Data Tablet Berhasil Ditambahkan!');
-        redirect('Admin/cKelolaData/tablet');
-    }
-
-    public function updatetablet($id)
-    {
-        $data = array(
-            'imei_tab' => $this->input->post('imei'),
-            'device' => $this->input->post('device'),
-            'no_bmn' => $this->input->post('no_bmn'),
-        );
-        // $this->mKelolaData->updatedata($id, $data);
-        $this->session->set_flashdata('success', 'Data Tablet Berhasil Diperbaharui!');
-        redirect('Admin/cKelolaData/tablet');
-    }
-    public function deletetablet($id)
-    {
-        // $this->mKelolaData->deletetablet($id);
-        $this->session->set_flashdata('success', 'Data tablet Berhasil Dihapus!');
-        redirect('Admin/cKelolaData/tablet');
-    }
-
-    //lokasi
-    public function lokasi()
-    {
-        $data = array(
-            // 'lokasi' => $this->mKelolaData->select_lokasi()
-        );
-        $this->load->view('Admin/Layout/head');
-        $this->load->view('Admin/Layout/aside');
-        $this->load->view('Admin/lokasi/vlokasi', $data);
-        $this->load->view('Admin/Layout/footer');
-    }
-    public function createlokasi()
-    {
-        $data = array(
-            'nama_lokasi' => $this->input->post('nama'),
-            'alamat_lengkap' => $this->input->post('alamat')
-        );
-        // $this->mKelolaData->insert_lokasi($data);
-        $this->session->set_flashdata('success', 'Data Lokasi Berhasil Disimpan!');
-        redirect('Admin/cKelolaData/lokasi');
-    }
-    public function updatelokasi($id)
-    {
-        $data = array(
-            'nama_lokasi' => $this->input->post('nama'),
-            'alamat_lengkap' => $this->input->post('alamat')
-        );
-        // $this->mKelolaData->updatelokasi($id, $data);
-        $this->session->set_flashdata('success', 'Data Lokasi Berhasil Diperbaharui!');
-        redirect('Admin/cKelolaData/lokasi');
-    }
-    public function deletelokasi($id)
-    {
-        // $this->mKelolaData->deletelokasi($id);
-        $this->session->set_flashdata('success', 'Data Lokasi Berhasil Dihapus!');
-        redirect('Admin/cKelolaData/lokasi');
-    }
-
 
     //user
     public function user()
