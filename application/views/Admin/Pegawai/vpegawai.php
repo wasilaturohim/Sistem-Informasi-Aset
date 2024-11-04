@@ -43,40 +43,45 @@
                                         <th class="text-center">No</th>
                                         <th class="text-center">Nip Pegawai</th>
                                         <th class="text-center">Nama Pegawai</th>
-										<th class="text-center">Jabatan</th>
-										<th class="text-center">Satuan Kerja 1</th>
-										<th class="text-center">Satuan Kerja 2</th>
-										<th class="text-center">Tanggal</th>
+                                        <th class="text-center">Jabatan</th>
+                                        <th class="text-center">Satuan Kerja 1</th>
+                                        <th class="text-center">Satuan Kerja 2</th>
+                                        <th class="text-center">Tanggal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $no = 1; // Inisialisasi variabel $no untuk nomor urut
-                                    foreach ($pegawai as $key => $value) {
+                                    $no = 1;
+                                    if (is_array($pegawai) && !empty($pegawai)) {
+                                        foreach ($pegawai as $key => $value) {
+                                            $formattedDate = $value['tmt'] ? date("d-m-Y", strtotime($value['tmt'])) : 'SUDAH PENSIUN';
                                     ?>
-                                        <tr>
-                                            <td class="text-center"><?= $no++ ?></td>
-                                            <td class="text-center"><?= $value->nip_pegawai ?></td>
-                                            <td class="text-center"><?= $value->nama_pegawai ?></td>
-                                            <td class="text-center"><?= $value->jabatan ?></td>
-                                            <td class="text-center"><?= $value->satker_1 ?></td>
-                                            <td class="text-center"><?= $value->satker_2 ?></td>
-                                            <td class="text-center"><?= $value->tmt ?></td>
-                                        </tr>
+                                            <tr>
+                                                <td class="text-center"><?= $no++ ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['nip_pegawai']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['nama_pegawai']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['jabatan']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['satker_1']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['satker_2']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($formattedDate) ?></td>
+                                            </tr>
                                     <?php
+                                        }
+                                    } else {
+                                        echo '<tr><td colspan="7" class="text-center">Data Pegawai Kosong</td></tr>';
                                     }
                                     ?>
                                 </tbody>
                                 <tfoot>
-                                    <tr>                        
-										<th class="text-center">No</th>
+                                    <tr>
+                                        <th class="text-center">No</th>
                                         <th class="text-center">Nip Pegawai</th>
                                         <th class="text-center">Nama Pegawai</th>
-										<th class="text-center">Jabatan</th>
-										<th class="text-center">Satuan Kerja 1</th>
-										<th class="text-center">Satuan Kerja 2</th>
-										<th class="text-center">Tanggal</th>
-										
+                                        <th class="text-center">Jabatan</th>
+                                        <th class="text-center">Satuan Kerja 1</th>
+                                        <th class="text-center">Satuan Kerja 2</th>
+                                        <th class="text-center">Tanggal</th>
+
                                     </tr>
                                 </tfoot>
                             </table>
@@ -113,7 +118,7 @@
                         <label for="exampleInputEmail1">Nama Tablet</label>
                         <input type="text" name="device" class="form-control" id="exampleInputEmail1" placeholder="Nama" required>
                     </div>
-					<div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">No BMN</label>
                         <input type="number" name="no_bmn" class="form-control" id="exampleInputEmail1" placeholder="Nama" required>
                     </div>
@@ -132,7 +137,7 @@
 <?php
 foreach ($tablet as $key => $value) {
 ?>
-    <div class="modal fade" id="edit<?= $value->imei_tab?>">
+    <div class="modal fade" id="edit<?= $value->imei_tab ?>">
         <div class="modal-dialog">
             <form action="<?= base_url('admin/ckeloladata/updatetablet/' . $value->imei_tab) ?>" method="POST">
                 <div class="modal-content">
@@ -151,7 +156,7 @@ foreach ($tablet as $key => $value) {
                             <label for="exampleInputEmail1">Nama Tablet</label>
                             <input type="text" name="device" value="<?= $value->device ?>" class="form-control" id="exampleInputEmail1" placeholder="Nama device" required>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">No BMN</label>
                             <input type="number" name="no_bmn" value="<?= $value->no_bmn ?>" class="form-control" id="exampleInputEmail1" placeholder="No BMN" required>
                         </div>
