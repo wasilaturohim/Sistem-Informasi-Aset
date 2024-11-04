@@ -49,17 +49,20 @@
                                 <tbody>
                                     <?php
                                     $no = 1;
+                                    if (is_array($tablet) && !empty($tablet)) {
                                     foreach ($tablet as $key => $value) {
                                     ?>
                                         <tr>
                                             <td class="text-center"><?= $no++ ?></td>
-											<td class="text-center"><?= $value->imei_tab?></td>
-                                            <td class="text-center"><?= $value->device ?></td>
-                                            <td class="text-center"><?= $value->no_bmn ?></td>
-                                            
+                                            <td class="text-center"><?= htmlspecialchars($value['imei_tab']) ?></td>
+                                            <td class="text-center"><?= htmlspecialchars($value['device']) ?></td>
+                                            <td class="text-center"><?= htmlspecialchars($value['no_bmn']) ?></td>                                            
                                         </tr>
                                     <?php
                                     }
+                                } else {
+                                    echo '<tr><td colspan="7" class="text-center">Data Tidak Ditemukan</td></tr>';
+                                }
                                     ?>
                                 </tbody>
                                 <tfoot>

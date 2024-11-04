@@ -83,14 +83,37 @@ class cKelolaData extends CI_Controller
     //barang
     public function tablet()
     {
-        $data = array(
-            // 'tablet' => $this->mKelolaData->select_tablet()
+        $token = $this->session->userdata('token'); 
+        $apiUrl = $this->config->item('api_url') . '/tab/';
+
+        $headers = array(
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json',
         );
+
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Decode response, ensuring it's a valid array
+        $tabletData = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($tabletData)) {
+            $tabletData = []; // Use an empty array if the response is invalid
+        }
+
+        $data = array(
+            'tablet' => json_decode($response, true)
+        );
+
         $this->load->view('Admin/Layout/head');
         $this->load->view('Admin/Layout/aside');
         $this->load->view('Admin/Tablet/vtablet', $data);
         $this->load->view('Admin/Layout/footer');
     }
+
     public function createtablet()
     {
         $data = array(
@@ -102,6 +125,7 @@ class cKelolaData extends CI_Controller
         $this->session->set_flashdata('success', 'Data Tablet Berhasil Ditambahkan!');
         redirect('Admin/cKelolaData/tablet');
     }
+
     public function updatetablet($id)
     {
         $data = array(
