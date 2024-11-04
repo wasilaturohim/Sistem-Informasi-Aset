@@ -54,7 +54,7 @@
                 <form action="<?= base_url('cAuth') ?>" method="post">
                     <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
                     <div class="input-group mb-3">
-                        <input type="text" name="username" class="form-control" value="admin" placeholder="Username">
+                        <input type="text" name="username" class="form-control" value="" placeholder="Username">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -63,7 +63,7 @@
                     </div>
                     <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" value="admin" placeholder="Password">
+                        <input type="password" name="password" class="form-control" value="" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

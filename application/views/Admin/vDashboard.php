@@ -39,7 +39,7 @@
                             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Tab Diterima</span>
-                                <span class="info-box-number"><?= isset($jml['monitoring']) ? $jml['monitoring']->jml_monitoring : '0' ?></span>
+                                <span class="info-box-number"><?= $transaksi['transaksi']['PENERIMAAN'] ?></span>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-reply"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Tab Dikembalikan</span>
-                                <span class="info-box-number"><?= isset($jml['pengajuan']) ? $jml['pengajuan']->jml_pengajuan : '0' ?></span>
+                                <span class="info-box-number"><?= $transaksi['transaksi']['PENGEMBALIAN'] ?></span>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Tab Lengkap</span>
-                                <span class="info-box-number"><?= isset($jml['asset']) ? $jml['asset']->jml_asset : '0' ?></span>
+                                <span class="info-box-number"><?= $transaksi['status']['LENGKAP'] ?></span>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Tab Tidak Lengkap</span>
-                                <span class="info-box-number"><?= isset($jml['user']) ? $jml['user']->jml_user : '0' ?></span>
+                                <span class="info-box-number"><?= $transaksi['status']['TIDAK_LENGKAP'] ?></span>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                             <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-check-circle"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Tab Berfungsi</span>
-                                <span class="info-box-number"><?= isset($jml['berfungsi']) ? $jml['berfungsi']->jml_berfungsi : '0' ?></span>
+                                <span class="info-box-number"><?= $transaksi['kondisi']['BERFUNGSI'] ?></span>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                             <span class="info-box-icon bg-secondary elevation-1"><i class="fas fa-times-circle"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Tab Tidak Berfungsi</span>
-                                <span class="info-box-number"><?= isset($jml['tidak_berfungsi']) ? $jml['tidak_berfungsi']->jml_tidak_berfungsi : '0' ?></span>
+                                <span class="info-box-number"><?= $transaksi['kondisi']['TIDAK_BERFUNGSI'] ?></span>
                             </div>
                         </div>
                     </div>

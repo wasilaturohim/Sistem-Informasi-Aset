@@ -3,13 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class cAuth extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('mAuth');
+        $this->load->library('session');
     }
-
 
     public function index()
     {
@@ -22,33 +20,49 @@ class cAuth extends CI_Controller
             $username = $this->input->post('username');
             $password = $this->input->post('password');
 
-            $auth = $this->mAuth->Auth($username, $password);
-            if ($auth) {
+            // Prepare data for API request
+            $postData = json_encode(array('username' => $username, 'password' => $password));
+            $apiUrl = $this->config->item('api_url') . '/auth/login';
 
-                $array = array(
-                    'id' => $auth->id_user
-                );
+            // Initialize cURL
+            $ch = curl_init($apiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
-                $this->session->set_userdata($array);
+            // Execute and get response
+            $response = curl_exec($ch);
+            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
 
-                if ($auth->level_user == '1') {
-                    redirect('Admin/cDashboard');
-                } else {
-                    redirect('KepalaDesa/cDashboard');
-                }
+            // Process response
+            if ($statusCode == 200) {
+                $authData = json_decode($response);
+
+                // Save token and user ID to session
+                $this->session->set_userdata(array(
+                    'id' => $authData->id,
+                    'token' => $authData->token
+                ));
+
+                // Redirect based on user role
+                redirect(base_url('Admin/cDashboard'));
             } else {
-                $this->session->set_flashdata('error', 'Username dan Password Salah!!!');
+                $this->session->set_flashdata('error', 'Username atau Password Salah!');
                 redirect('cAuth');
             }
         }
     }
+
     public function logout()
     {
         $this->session->unset_userdata('id');
+        $this->session->unset_userdata('token');
         $this->session->set_flashdata('success', 'Anda Berhasil Logout!');
-
         redirect('cAuth');
     }
 }
+
 
 /* End of file c.php */
