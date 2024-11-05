@@ -31,7 +31,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-				<button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-default">
+                    <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-default">
                         <i class="fas fa-list"></i> Tambah Data Transaksi
                     </button>
                     <div class="card">
@@ -48,87 +48,76 @@
                                         <th class="text-center">Nip Pegawai</th>
                                         <th class="text-center">Tanggal BAST</th>
                                         <th class="text-center">Transaksi</th>
-										<th class="text-center">Status</th>
-										<th class="text-center">Kondisi</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Kondisi</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     $no = 1;
-                                    foreach ($transaksi as $key => $value) {
+                                    if (is_array($transaksi) || !empty($transaksi)) {
+                                        foreach ($transaksi as $key => $value) {
+                                            $formattedDate = $value['tanggal_bast'] ? date("d-m-Y", strtotime($value['tanggal_bast'])) : '-';
+
                                     ?>
-                                        <tr>
-                                            <td><?= $no++ ?></td>
-                                            <td><?= $value->imei_tab ?></td>
-                                            <td><?= $value->nip_pegawai ?></td>
-                                            <td><?= $value->tanggal_bast ?></td>
-											<td>
-												<?php
-													switch ($value->transaksi) {
-														case 'Penerimaan':
-															echo '<span class="badge badge-success">PENERIMAAN</span>';
-															break;
-														case 'Pengembalian':
-															echo '<span class="badge badge-warning">PENGEMBALIAN</span>';
-															break;	
-														default:
-															echo '<span class="badge badge-secondary">Unknown</span>'; // For any unexpected value
-															break;
-													}
-												?>
-											</td>
-											<td>
-												<?php
-													switch ($value->status) {
-														case 'Lengkap':
-															echo '<span class="badge badge-success">LENGKAP</span>';
-															break;
-														case 'Tidak Lengkap':
-															echo '<span class="badge badge-warning">TIDAK LENGKAP</span>';
-															break;	
-														default:
-															echo '<span class="badge badge-secondary">Unknown</span>'; // For any unexpected value
-															break;
-													}
-												?>
-											</td>
-											<td>
-												<?php
-													switch ($value->kondisi) {
-														case 'Berfungsi':
-															echo '<span class="badge badge-success">BERFUNGSI</span>';
-															break;
-														case 'Tidak Berfungsi':
-															echo '<span class="badge badge-warning">TIDAK BERFUNGSI</span>';
-															break;	
-														default:
-															echo '<span class="badge badge-secondary">Unknown</span>'; // For any unexpected value
-															break;
-													}
-												?>
-											</td>
-											<td class="text-center">
-                                                <div class="btn-group">
-                                                    <a href="<?= base_url('Admin/cKelolaData/deletetransaksi/' . $value->id_transaksi) ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                                    <button type="button" data-toggle="modal" data-target="#edit<?= $value->id_transaksi ?>" class="btn btn-warning"><i class="fas fa-edit"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="text-center"><?= $no++ ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['imei_tab']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($value['nip_pegawai']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($formattedDate) ?></td>
+
+                                                <td class="text-center">
+                                                    <?php
+                                                    if ($value['transaksi'] == 'PENERIMAAN') {
+                                                        echo '<span class="badge badge-primary">PENERIMAAN</span>';
+                                                    } elseif ($value['transaksi'] == 'PENGEMBALIAN') {
+                                                        echo '<span class="badge badge-success">PENGEMBALIAN</span>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php
+                                                    if ($value['status'] == 'LENGKAP') {
+                                                        echo '<span class="badge badge-primary">LENGKAP</span>';
+                                                    } elseif ($value['status'] == 'TIDAK_LENGKAP') {
+                                                        echo '<span class="badge badge-success">TIDAK LENGKAP</span>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php
+                                                    if ($value['kondisi'] == 'BERFUNGSI') {
+                                                        echo '<span class="badge badge-primary">BERFUNGSI</span>';
+                                                    } elseif ($value['kondisi'] == 'TIDAK_BERFUNGSI') {
+                                                        echo '<span class="badge badge-success">TIDAK BERFUNGSI</span>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="<?= base_url('Admin/cKelolaData/deletetransaksi/' . $value['id_transaksi']) ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <button type="button" data-toggle="modal" data-target="#edit<?= $value['id_transaksi'] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                     <?php
+                                        }
+                                    } else {
+                                        echo '<tr><td colspan="8" class="text-center">Data Tidak Ditemukan</td></tr>';
                                     }
                                     ?>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-									<th class="text-center">No</th>
+                                        <th class="text-center">No</th>
                                         <th class="text-center">Imei Tablet</th>
                                         <th class="text-center">Nip Pegawai</th>
                                         <th class="text-center">Tanggal BAST</th>
                                         <th class="text-center">Transaksi</th>
-										<th class="text-center">Status</th>
-										<th class="text-center">Kondisi</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Kondisi</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </tfoot>
@@ -157,52 +146,52 @@
                     </button>
                 </div>
                 <div class="modal-body">
-					<div class="form-group">
-						<label for="imei_tab">IMEI Tablet</label>
-						<select name="imei_tab" class="form-control" required>
-							<option value="">-- Pilih IMEI Tablet --</option>
-							<?php foreach ($tablet as $t) : ?>
-								<option value="<?= $t->imei_tab; ?>"><?= $t->imei_tab; ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="nip_pegawai">NIP Pegawai</label>
-						<select name="nip_pegawai" class="form-control" required>
-							<option value="">-- Pilih NIP Pegawai --</option>
-							<?php foreach ($pegawai as $p) : ?>
-								<option value="<?= $p->nip_pegawai; ?>"><?= $p->nip_pegawai; ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
+                    <div class="form-group">
+                        <label for="imei_tab">IMEI Tablet</label>
+                        <select name="imei_tab" class="form-control" required>
+                            <option value="">-- Pilih IMEI Tablet --</option>
+                            <?php foreach ($tablet as $t) : ?>
+                                <option value="<?= $t->imei_tab; ?>"><?= $t->imei_tab; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nip_pegawai">NIP Pegawai</label>
+                        <select name="nip_pegawai" class="form-control" required>
+                            <option value="">-- Pilih NIP Pegawai --</option>
+                            <?php foreach ($pegawai as $p) : ?>
+                                <option value="<?= $p->nip_pegawai; ?>"><?= $p->nip_pegawai; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-					<div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Tanggal BAST</label>
                         <input type="date" name="tanggal_bast" class="form-control" id="exampleInputEmail1" placeholder="Nama" required>
                     </div>
-					<div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Transaksi</label>
-						<select class="form-control" name="transaksi" required>
-						<option value="">--Pilih Transaksi---</option>
-						<option value="Penerimaan">PENERIMAAN</option>
-						<option value="Pengembalian">PENGEMBALIAN</option>
-					</select>
+                        <select class="form-control" name="transaksi" required>
+                            <option value="">--Pilih Transaksi---</option>
+                            <option value="Penerimaan">PENERIMAAN</option>
+                            <option value="Pengembalian">PENGEMBALIAN</option>
+                        </select>
                     </div>
-					<div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Status</label>
-						<select class="form-control" name="status" required>
-						<option value="">--Pilih Status---</option>
-						<option value="Lengkap">LENGKAP</option>
-						<option value="Tidak Lengkap">TIDAK LENGKAP</option>
-					</select>
+                        <select class="form-control" name="status" required>
+                            <option value="">--Pilih Status---</option>
+                            <option value="Lengkap">LENGKAP</option>
+                            <option value="Tidak Lengkap">TIDAK LENGKAP</option>
+                        </select>
                     </div>
-					<div class="form-group">
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Kondisi</label>
-						<select class="form-control" name="kondisi" required>
-						<option value="">--Pilih Kondisi---</option>
-						<option value="Berfungsi">BERFUNGSI</option>
-						<option value="Tidak Berfungsi">TIDAK BERFUNGSI</option>
-					</select>
+                        <select class="form-control" name="kondisi" required>
+                            <option value="">--Pilih Kondisi---</option>
+                            <option value="Berfungsi">BERFUNGSI</option>
+                            <option value="Tidak Berfungsi">TIDAK BERFUNGSI</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -220,7 +209,7 @@
 foreach ($transaksi as $key => $value) {
 ?>
     <div class="modal fade" id="edit<?= $value->id_transaksi ?>" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document">
             <form action="<?= base_url('admin/ckeloladata/updatetransaksi/' . $value->id_transaksi) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -230,35 +219,35 @@ foreach ($transaksi as $key => $value) {
                         </button>
                     </div>
                     <div class="modal-body">
-					<div class="form-group">
-    <label for="imei_tab">Imei Tablet</label>
-    <select name="imei_tab" class="form-control" required>
-        <option value="">--Pilih Imei Tablet--</option>
-        <?php foreach ($tablet as $tab) : ?>
-            <option value="<?= $tab->imei_tab ?>" <?= $tab->imei_tab == $value->imei_tab ? 'selected' : '' ?>>
-                <?= $tab->imei_tab ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
+                        <div class="form-group">
+                            <label for="imei_tab">Imei Tablet</label>
+                            <select name="imei_tab" class="form-control" required>
+                                <option value="">--Pilih Imei Tablet--</option>
+                                <?php foreach ($tablet as $tab) : ?>
+                                    <option value="<?= $tab->imei_tab ?>" <?= $tab->imei_tab == $value->imei_tab ? 'selected' : '' ?>>
+                                        <?= $tab->imei_tab ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-<div class="form-group">
-    <label for="nip_pegawai">Nip Pegawai</label>
-    <select name="nip_pegawai" class="form-control" required>
-        <option value="">--Pilih Nip Pegawai--</option>
-        <?php foreach ($pegawai as $pgw) : ?>
-            <option value="<?= $pgw->nip_pegawai ?>" <?= $pgw->nip_pegawai == $value->nip_pegawai ? 'selected' : '' ?>>
-                <?= $pgw->nip_pegawai ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
+                        <div class="form-group">
+                            <label for="nip_pegawai">Nip Pegawai</label>
+                            <select name="nip_pegawai" class="form-control" required>
+                                <option value="">--Pilih Nip Pegawai--</option>
+                                <?php foreach ($pegawai as $pgw) : ?>
+                                    <option value="<?= $pgw->nip_pegawai ?>" <?= $pgw->nip_pegawai == $value->nip_pegawai ? 'selected' : '' ?>>
+                                        <?= $pgw->nip_pegawai ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-						<div class="form-group">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Tanggal BAST</label>
                             <input type="date" name="tanggal_bast" value="<?= $value->tanggal_bast ?>" class="form-control" id="exampleInputEmail1" placeholder="Tanggal BAST" required>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Transaksi</label>
                             <select class="form-control" name="transaksi" required>
                                 <option value="">--Pilih Role---</option>
@@ -270,7 +259,7 @@ foreach ($transaksi as $key => $value) {
                                                     } ?>>PENGEMBALIAN</option>
                             </select>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Status</label>
                             <select class="form-control" name="status" required>
                                 <option value="">--Pilih Status---</option>
@@ -282,7 +271,7 @@ foreach ($transaksi as $key => $value) {
                                                     } ?>>TIDAK LENGKAP</option>
                             </select>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Kondisi</label>
                             <select class="form-control" name="kondisi" required>
                                 <option value="">--Pilih Kondisi---</option>

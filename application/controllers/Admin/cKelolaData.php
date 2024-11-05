@@ -231,10 +231,29 @@ class cKelolaData extends CI_Controller
     //transaksi
     public function transaksi()
     {
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/transaksi/';
+
+        $headers = array(
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json',
+        );
+
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Decode response, ensuring it's a valid array
+        $transaksiData = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($transaksiData)) {
+            $transaksiData = []; // Use an empty array if the response is invalid
+        }
+
         $data = array(
-            // 'transaksi' => $this->mKelolaData->select_transaksi(),
-            // 'tablet' => $this->mKelolaData->get_all_tablets(), // Ambil semua data tablet
-            // 'pegawai' => $this->mKelolaData->get_all_pegawai() // Ambil semua data pegawai
+            'transaksi' => json_decode($response, true)
         );
 
         $this->load->view('Admin/Layout/head');
@@ -242,52 +261,86 @@ class cKelolaData extends CI_Controller
         $this->load->view('Admin/Transaksi/vtransaksi', $data);
         $this->load->view('Admin/Layout/footer');
     }
-    public function get_all_tablets()
-    {
-        $this->db->select('imei_tab');
-        $this->db->from('tablet'); // Sesuaikan nama tabel jika perlu
-        return $this->db->get()->result();
-    }
-
-    public function get_all_pegawai()
-    {
-        $this->db->select('nip_pegawai');
-        $this->db->from('pegawai'); // Sesuaikan nama tabel jika perlu
-        return $this->db->get()->result();
-    }
-
 
     public function createtransaksi()
     {
-        $data = array(
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/user';
+
+        $postData = json_encode(array(
             'imei_tab' => $this->input->post('imei_tab'),
             'nip_pegawai' => $this->input->post('nip_pegawai'),
             'tanggal_bast' => $this->input->post('tanggal_bast'),
             'transaksi' => $this->input->post('transaksi'),
             'status' => $this->input->post('status'),
-            'kondisi' => $this->input->post('kondisi'),
-        );
-        // $this->mKelolaData->insert_transaksi($data);
+            'kondisi' => $this->input->post('kondisi')
+        ));
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $token
+        ));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+
+        curl_exec($ch);
+        curl_close($ch);
+
         $this->session->set_flashdata('success', 'Data Transaksi Berhasil Disimpan!');
         redirect('Admin/cKelolaData/transaksi');
     }
-    public function updatetransaksi($id)
+
+    public function updatetransaksi($id_transaksi)
     {
-        $data = array(
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/transaksi/' . $id_transaksi;
+
+        $postData = json_encode(array(
             'imei_tab' => $this->input->post('imei_tab'),
             'nip_pegawai' => $this->input->post('nip_pegawai'),
             'tanggal_bast' => $this->input->post('tanggal_bast'),
             'transaksi' => $this->input->post('transaksi'),
             'status' => $this->input->post('status'),
-            'kondisi' => $this->input->post('kondisi'),
-        );
-        // $this->mKelolaData->updatetransaksi($id, $data);
-        $this->session->set_flashdata('success', 'Data Transaksi Berhasil Update!');
+            'kondisi' => $this->input->post('kondisi')
+        ));
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $token
+        ));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+
+        curl_exec($ch);
+        curl_close($ch);
+
+        $this->session->set_flashdata('success', 'Data Transaksi Berhasil Diperbaharui!');
         redirect('Admin/cKelolaData/transaksi');
     }
-    public function deletetransaksi($id)
+
+    public function deletetransaksi($id_transaksi)
     {
-        // $this->mKelolaData->deletetransaksi($id);
+        $token = $this->session->userdata('token');
+        $apiUrl = $this->config->item('api_url') . '/transaksi/' . $id_transaksi;
+
+        // Initialize cURL
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $token
+        ));
+
+        curl_exec($ch);
+        curl_close($ch);
+
         $this->session->set_flashdata('success', 'Data Transaksi Berhasil Dihapus!');
         redirect('Admin/cKelolaData/transaksi');
     }
