@@ -19,15 +19,19 @@
 
     <!-- Main content -->
     <section class="content">
-        <?php if ($this->session->userdata('success')) {
-        ?>
+        <?php if ($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible mt-3">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h5><i class="icon fas fa-check"></i> Alert!</h5>
-                <?= $this->session->userdata('success') ?>
+                <?= $this->session->flashdata('success') ?>
             </div>
-        <?php
-        } ?>
+        <?php elseif ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible mt-3">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                <?= $this->session->flashdata('error') ?>
+            </div>
+        <?php endif; ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">

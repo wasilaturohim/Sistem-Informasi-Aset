@@ -286,10 +286,16 @@ class cKelolaData extends CI_Controller
         ));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $this->session->set_flashdata('success', 'Data Transaksi Berhasil Disimpan!');
+        if ($httpCode == 200) {
+            $this->session->set_flashdata('success', 'Data Transaksi Berhasil Disimpan!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menyimpan data transaksi. Silakan coba lagi.');
+        }
+
         redirect('Admin/cKelolaData/transaksi');
     }
 
@@ -317,10 +323,16 @@ class cKelolaData extends CI_Controller
         ));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $this->session->set_flashdata('success', 'Data Transaksi Berhasil Diperbaharui!');
+        if ($httpCode == 200) {
+            $this->session->set_flashdata('success', 'Data Transaksi Berhasil Diupdate!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal mengupdate data transaksi. Silakan coba lagi.');
+        }
+
         redirect('Admin/cKelolaData/transaksi');
     }
 
@@ -338,10 +350,16 @@ class cKelolaData extends CI_Controller
             'Authorization: Bearer ' . $token
         ));
 
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $this->session->set_flashdata('success', 'Data Transaksi Berhasil Dihapus!');
+        if ($httpCode == 200) {
+            $this->session->set_flashdata('success', 'Data Transaksi Berhasil Dihapus!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data transaksi. Silakan coba lagi.');
+        }
+
         redirect('Admin/cKelolaData/transaksi');
     }
 }
