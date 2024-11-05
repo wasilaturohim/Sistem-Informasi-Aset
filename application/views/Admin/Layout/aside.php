@@ -6,6 +6,28 @@
         <span class="brand-text font-weight-LIGHT">PUSTEKINFO</span>
     </a>
 
+    <?php
+    // Inisialisasi cURL
+    $ch = curl_init();
+    $apiUrl = $this->config->item('api_url') . '/user/me';
+
+    // Endpoint API untuk mendapatkan data user
+    curl_setopt($ch, CURLOPT_URL, ($apiUrl)); // Ganti dengan URL API sebenarnya
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $_SESSION['token'] // Sesuaikan cara menyimpan token
+    ]);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    // Decode JSON response
+    $user = json_decode($response, true);
+
+    // Ambil nilai username
+    $username = isset($user['username']) ? $user['username'] : 'Guest';
+    ?>
+
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
@@ -13,7 +35,7 @@
             <div class="image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Selamat Datang, <br>Admin</a>
+                <a href="#" class="d-block">Selamat Datang, <br><?php echo htmlspecialchars($username); ?></a>
             </div>
         </div>
 
@@ -71,8 +93,8 @@
                 </li>
                 <li class="nav-item">
                     <a href="<?= base_url('Admin/cKelolaData/transaksi') ?>" class="nav-link   <?php if ($this->uri->segment(1) == 'Admin' && $this->uri->segment(2) == 'cKelolaData' && $this->uri->segment(3) == 'transaksi') {
-                                                                                            echo 'active';
-                                                                                        }  ?>">
+                                                                                                    echo 'active';
+                                                                                                }  ?>">
                         <i class="nav-icon fas fa-clipboard-check"></i>
                         <p>Transaksi</p>
                     </a>
