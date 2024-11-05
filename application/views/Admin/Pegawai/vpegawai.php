@@ -46,7 +46,7 @@
                                         <th class="text-center">Jabatan</th>
                                         <th class="text-center">Satuan Kerja 1</th>
                                         <th class="text-center">Satuan Kerja 2</th>
-                                        <th class="text-center">Tanggal</th>
+                                        <th class="text-center">Tanggal Pensiun</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,7 +80,7 @@
                                         <th class="text-center">Jabatan</th>
                                         <th class="text-center">Satuan Kerja 1</th>
                                         <th class="text-center">Satuan Kerja 2</th>
-                                        <th class="text-center">Tanggal</th>
+                                        <th class="text-center">Tanggal Pensiun</th>
 
                                     </tr>
                                 </tfoot>

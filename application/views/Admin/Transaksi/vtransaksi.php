@@ -45,11 +45,13 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Imei Tablet</th>
-                                        <th class="text-center">Nip Pegawai</th>
+                                        <th class="text-center">NIP Pegawai</th>
+                                        <th class="text-center">Nama Pegawai</th>
                                         <th class="text-center">Tanggal BAST</th>
                                         <th class="text-center">Transaksi</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Kondisi</th>
+                                        <th class="text-center">Tanggal Pensiun</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -59,12 +61,15 @@
                                     if (is_array($transaksi) || !empty($transaksi)) {
                                         foreach ($transaksi as $key => $value) {
                                             $formattedDate = $value['tanggal_bast'] ? date("d-m-Y", strtotime($value['tanggal_bast'])) : '-';
+                                            $namaPegawai = isset($value['pegawai']['nama_pegawai']) ? $value['pegawai']['nama_pegawai'] : '-';
+                                            $tmtPegawai = isset($value['pegawai']['tmt']) ? date("d-m-Y", strtotime($value['pegawai']['tmt'])) : '-';
 
                                     ?>
                                             <tr>
                                                 <td class="text-center"><?= $no++ ?></td>
                                                 <td class="text-center"><?= htmlspecialchars($value['imei_tab']) ?></td>
                                                 <td class="text-center"><?= htmlspecialchars($value['nip_pegawai']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($namaPegawai) ?></td>
                                                 <td class="text-center"><?= htmlspecialchars($formattedDate) ?></td>
 
                                                 <td class="text-center">
@@ -94,6 +99,9 @@
                                                     }
                                                     ?>
                                                 </td>
+
+                                                <td class="text-center"><?= htmlspecialchars($tmtPegawai) ?></td>
+
                                                 <td class="text-center">
                                                     <div class="btn-group">
                                                         <a href="<?= base_url('Admin/cKelolaData/deletetransaksi/' . $value['id_transaksi']) ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
@@ -113,11 +121,13 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Imei Tablet</th>
-                                        <th class="text-center">Nip Pegawai</th>
+                                        <th class="text-center">NIP Pegawai</th>
+                                        <th class="text-center">Nama Pegawai</th>
                                         <th class="text-center">Tanggal BAST</th>
                                         <th class="text-center">Transaksi</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Kondisi</th>
+                                        <th class="text-center">Tanggal Pensiun</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </tfoot>

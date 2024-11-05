@@ -232,7 +232,7 @@ class cKelolaData extends CI_Controller
     public function transaksi()
     {
         $token = $this->session->userdata('token');
-        $apiUrl = $this->config->item('api_url') . '/transaksi/';
+        $apiUrl = $this->config->item('api_url') . '/transaksi?tmt=asc';
 
         $headers = array(
             'Authorization: Bearer ' . $token,
