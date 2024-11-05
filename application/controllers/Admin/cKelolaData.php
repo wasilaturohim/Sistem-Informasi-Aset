@@ -265,7 +265,7 @@ class cKelolaData extends CI_Controller
     public function createtransaksi()
     {
         $token = $this->session->userdata('token');
-        $apiUrl = $this->config->item('api_url') . '/user';
+        $apiUrl = $this->config->item('api_url') . '/transaksi';
 
         $postData = json_encode(array(
             'imei_tab' => $this->input->post('imei_tab'),

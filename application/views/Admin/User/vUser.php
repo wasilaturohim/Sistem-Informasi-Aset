@@ -212,13 +212,13 @@ foreach ($user as $key => $value) {
                                 <option value="">--Pilih Role---</option>
                                 <option value="SUPER" <?php if ($value->role == 'SUPER') {
                                                             echo 'selected';
-                                                        } ?>>Super Admin</option>
+                                                        } ?>>SUPER</option>
                                 <option value="ADMIN" <?php if ($value->role == 'ADMIN') {
                                                             echo 'selected';
-                                                        } ?>>Admin</option>
+                                                        } ?>>ADMIN</option>
                                 <option value="VIEWER" <?php if ($value->role == 'VIEWER') {
                                                             echo 'selected';
-                                                        } ?>>User</option>
+                                                        } ?>>USER</option>
                             </select>
                         </div>
                     </div>

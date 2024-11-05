@@ -157,22 +157,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="imei_tab">IMEI Tablet</label>
-                        <select name="imei_tab" class="form-control" required>
-                            <option value="">-- Pilih IMEI Tablet --</option>
-                            <?php foreach ($tablet as $t) : ?>
-                                <option value="<?= $t->imei_tab; ?>"><?= $t->imei_tab; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label for="exampleInputEmail1">IMEI Device</label>
+                        <input type="text" name="imei_tab" class="form-control" id="exampleInputEmail1" placeholder="IMEI Device" required>
                     </div>
                     <div class="form-group">
-                        <label for="nip_pegawai">NIP Pegawai</label>
-                        <select name="nip_pegawai" class="form-control" required>
-                            <option value="">-- Pilih NIP Pegawai --</option>
-                            <?php foreach ($pegawai as $p) : ?>
-                                <option value="<?= $p->nip_pegawai; ?>"><?= $p->nip_pegawai; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label for="exampleInputEmail1">NIP Pegawai</label>
+                        <input type="text" name="nip_pegawai" class="form-control" id="exampleInputEmail1" placeholder="NIP Pegawai" required>
                     </div>
 
                     <div class="form-group">
@@ -183,24 +173,24 @@
                         <label for="exampleInputEmail1">Transaksi</label>
                         <select class="form-control" name="transaksi" required>
                             <option value="">--Pilih Transaksi---</option>
-                            <option value="Penerimaan">PENERIMAAN</option>
-                            <option value="Pengembalian">PENGEMBALIAN</option>
+                            <option value="PENERIMAAN">PENERIMAAN</option>
+                            <option value="PENGEMBALIAN">PENGEMBALIAN</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Status</label>
                         <select class="form-control" name="status" required>
                             <option value="">--Pilih Status---</option>
-                            <option value="Lengkap">LENGKAP</option>
-                            <option value="Tidak Lengkap">TIDAK LENGKAP</option>
+                            <option value="LENGKAP">LENGKAP</option>
+                            <option value="TIDAK_LENGKAP">TIDAK LENGKAP</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Kondisi</label>
                         <select class="form-control" name="kondisi" required>
                             <option value="">--Pilih Kondisi---</option>
-                            <option value="Berfungsi">BERFUNGSI</option>
-                            <option value="Tidak Berfungsi">TIDAK BERFUNGSI</option>
+                            <option value="BERFUNGSI">BERFUNGSI</option>
+                            <option value="TIDAK_BERFUNGSI">TIDAK BERFUNGSI</option>
                         </select>
                     </div>
                 </div>
@@ -218,9 +208,9 @@
 <?php
 foreach ($transaksi as $key => $value) {
 ?>
-    <div class="modal fade" id="edit<?= $value->id_transaksi ?>" tabindex="-1" role="dialog">
+    <div class="modal fade" id="edit<?= $value['id_transaksi'] ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <form action="<?= base_url('admin/ckeloladata/updatetransaksi/' . $value->id_transaksi) ?>" method="POST">
+            <form action="<?= base_url('admin/ckeloladata/updatetransaksi/' . $value['id_transaksi']) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Update Data Transaksi</h4>
@@ -230,67 +220,51 @@ foreach ($transaksi as $key => $value) {
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="imei_tab">Imei Tablet</label>
-                            <select name="imei_tab" class="form-control" required>
-                                <option value="">--Pilih Imei Tablet--</option>
-                                <?php foreach ($tablet as $tab) : ?>
-                                    <option value="<?= $tab->imei_tab ?>" <?= $tab->imei_tab == $value->imei_tab ? 'selected' : '' ?>>
-                                        <?= $tab->imei_tab ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label for="exampleInputEmail1">IMEI Device</label>
+                            <input type="text" name="imei_tab" value="<?= $value['imei_tab'] ?>" class="form-control" id="exampleInputEmail1" placeholder="IMEI Device" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="nip_pegawai">Nip Pegawai</label>
-                            <select name="nip_pegawai" class="form-control" required>
-                                <option value="">--Pilih Nip Pegawai--</option>
-                                <?php foreach ($pegawai as $pgw) : ?>
-                                    <option value="<?= $pgw->nip_pegawai ?>" <?= $pgw->nip_pegawai == $value->nip_pegawai ? 'selected' : '' ?>>
-                                        <?= $pgw->nip_pegawai ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label for="exampleInputEmail1">NIP Pegawai</label>
+                            <input type="text" name="nip_pegawai" value="<?= $value['nip_pegawai'] ?>" class="form-control" id="exampleInputEmail1" placeholder="NIP Pegawai" required>
                         </div>
-
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tanggal BAST</label>
-                            <input type="date" name="tanggal_bast" value="<?= $value->tanggal_bast ?>" class="form-control" id="exampleInputEmail1" placeholder="Tanggal BAST" required>
+                            <input type="date" name="tanggal_bast" value="<?= isset($value['tanggal_bast']) ? date('Y-m-d', strtotime($value['tanggal_bast'])) : '' ?>" class="form-control" id="exampleInputEmail1" placeholder="Tanggal BAST" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Transaksi</label>
                             <select class="form-control" name="transaksi" required>
                                 <option value="">--Pilih Role---</option>
-                                <option value="1" <?php if ($value->transaksi == 'Penerimaan') {
-                                                        echo 'selected';
-                                                    } ?>>PENERIMAAN</option>
-                                <option value="2" <?php if ($value->transaksi == 'Pengembalian') {
-                                                        echo 'selected';
-                                                    } ?>>PENGEMBALIAN</option>
+                                <option value="PENERIMAAN" <?php if ($value['transaksi'] == 'PENERIMAAN') {
+                                                                echo 'selected';
+                                                            } ?>>PENERIMAAN</option>
+                                <option value="PENGEMBALIAN" <?php if ($value['transaksi'] == 'PENGEMBALIAN') {
+                                                                    echo 'selected';
+                                                                } ?>>PENGEMBALIAN</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status</label>
                             <select class="form-control" name="status" required>
                                 <option value="">--Pilih Status---</option>
-                                <option value="1" <?php if ($value->status == 'Lengkap') {
-                                                        echo 'selected';
-                                                    } ?>>LENGKAP</option>
-                                <option value="2" <?php if ($value->status == 'Tidak Lengkap') {
-                                                        echo 'selected';
-                                                    } ?>>TIDAK LENGKAP</option>
+                                <option value="LENGKAP" <?php if ($value['status'] == 'LENGKAP') {
+                                                            echo 'selected';
+                                                        } ?>>LENGKAP</option>
+                                <option value="TIDAK_LENGKAP" <?php if ($value['status'] == 'TIDAK_LENGKAP') {
+                                                                    echo 'selected';
+                                                                } ?>>TIDAK LENGKAP</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Kondisi</label>
                             <select class="form-control" name="kondisi" required>
                                 <option value="">--Pilih Kondisi---</option>
-                                <option value="1" <?php if ($value->kondisi == 'Berfungsi') {
-                                                        echo 'selected';
-                                                    } ?>>BERFUNGSI</option>
-                                <option value="2" <?php if ($value->kondisi == 'Tidak Berfungsi') {
-                                                        echo 'selected';
-                                                    } ?>>TIDAK BERFUNGSI</option>
+                                <option value="BERFUNGSI" <?php if ($value['kondisi'] == 'BERFUNGSI') {
+                                                                echo 'selected';
+                                                            } ?>>BERFUNGSI</option>
+                                <option value="TIDAK_BERFUNGSI" <?php if ($value['kondisi'] == 'TIDAK_BERFUNGSI') {
+                                                                    echo 'selected';
+                                                                } ?>>TIDAK BERFUNGSI</option>
                             </select>
                         </div>
                     </div>
