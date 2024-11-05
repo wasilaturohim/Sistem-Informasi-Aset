@@ -8,13 +8,12 @@ class cKelolaData extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->load->model('mKelolaData');
     }
 
 
     public function pegawai()
     {
-        $token = $this->session->userdata('token'); // Get JWT token from session
+        $token = $this->session->userdata('token'); 
         $apiUrl = $this->config->item('api_url') . '/pegawai/';
 
         $headers = array(
@@ -29,10 +28,9 @@ class cKelolaData extends CI_Controller
         $response = curl_exec($ch);
         curl_close($ch);
 
-        // Decode response, ensuring it's a valid array
         $pegawaiData = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($pegawaiData)) {
-            $pegawaiData = []; // Use an empty array if the response is invalid
+            $pegawaiData = []; 
         }
 
         $data = array(
@@ -45,7 +43,7 @@ class cKelolaData extends CI_Controller
         $this->load->view('Admin/Layout/footer');
     }
 
-    //barang
+    //device
     public function tablet()
     {
         $token = $this->session->userdata('token');
@@ -63,10 +61,9 @@ class cKelolaData extends CI_Controller
         $response = curl_exec($ch);
         curl_close($ch);
 
-        // Decode response, ensuring it's a valid array
         $tabletData = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($tabletData)) {
-            $tabletData = []; // Use an empty array if the response is invalid
+            $tabletData = []; 
         }
 
         $data = array(
@@ -82,17 +79,14 @@ class cKelolaData extends CI_Controller
     //user
     public function user()
     {
-        $token = $this->session->userdata('token'); // Get JWT token from session
+        $token = $this->session->userdata('token');
         $apiUrl = $this->config->item('api_url') . '/user/';
-        // $apiUrl = 'http://localhost:3000/user';
 
-        // Siapkan header untuk request
         $headers = array(
             'Authorization: Bearer ' . $token,
             'Content-Type: application/json',
         );
 
-        // Initialize cURL
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -110,39 +104,6 @@ class cKelolaData extends CI_Controller
         $this->load->view('Admin/Layout/footer');
     }
 
-    public function currentuser()
-    {
-        $token = $this->session->userdata('token'); // Get JWT token from session
-        $apiUrl = $this->config->item('api_url') . '/user/me';
-
-        // Set up headers for the request
-        $headers = array(
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        );
-
-        // Initialize cURL
-        $ch = curl_init($apiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $user = json_decode($response);
-
-        // Pass the user data to the views
-        $data = array(
-            'user' => $user
-        );
-
-        $this->load->view('Admin/Layout/head');
-        $this->load->view('Admin/Layout/aside', $data); // Pass $data here
-        $this->load->view('Admin/user/vuser', $data);
-        $this->load->view('Admin/Layout/footer');
-    }
-
-
     public function createuser()
     {
         $token = $this->session->userdata('token');
@@ -157,7 +118,6 @@ class cKelolaData extends CI_Controller
             'role' => $this->input->post('role')
         ));
 
-        // Initialize cURL
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -167,10 +127,16 @@ class cKelolaData extends CI_Controller
         ));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $this->session->set_flashdata('success', 'Data User Berhasil Disimpan!');
+        if ($httpCode == 200) {
+            $this->session->set_flashdata('success', 'Data User Berhasil Disimpan!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menyimpan data user. Silakan coba lagi.');
+        }
+
         redirect('Admin/cKelolaData/user');
     }
 
@@ -178,7 +144,6 @@ class cKelolaData extends CI_Controller
     {
         $token = $this->session->userdata('token');
         $apiUrl = $this->config->item('api_url') . '/user/' . $id;
-        // $apiUrl = 'http://localhost:3000/user/' . $id;
 
         $postData = json_encode(array(
             'name' => $this->input->post('name'),
@@ -189,7 +154,6 @@ class cKelolaData extends CI_Controller
             'role' => $this->input->post('role')
         ));
 
-        // Initialize cURL
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
@@ -199,10 +163,16 @@ class cKelolaData extends CI_Controller
         ));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $this->session->set_flashdata('success', 'Data User Berhasil Diperbaharui!');
+        if ($httpCode == 200) {
+            $this->session->set_flashdata('success', 'Data User Berhasil Diupdate!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal mengupdate data user. Silakan coba lagi.');
+        }
+
         redirect('Admin/cKelolaData/user');
     }
 
@@ -210,9 +180,7 @@ class cKelolaData extends CI_Controller
     {
         $token = $this->session->userdata('token');
         $apiUrl = $this->config->item('api_url') . '/user/' . $id;
-        // $apiUrl = 'http://localhost:3000/user/' . $id;
 
-        // Initialize cURL
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -221,10 +189,16 @@ class cKelolaData extends CI_Controller
             'Authorization: Bearer ' . $token
         ));
 
-        curl_exec($ch);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $this->session->set_flashdata('success', 'Data User Berhasil Dihapus!');
+        if ($httpCode == 200) {
+            $this->session->set_flashdata('success', 'Data User Berhasil Dihapus!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data user. Silakan coba lagi.');
+        }
+
         redirect('Admin/cKelolaData/user');
     }
 
