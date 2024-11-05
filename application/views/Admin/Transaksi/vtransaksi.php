@@ -157,25 +157,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-					<div class="form-group">
-						<label for="imei_tab">IMEI Tablet</label>
-						<select name="imei_tab" class="form-control" required>
-							<option value="">-- Pilih IMEI Tablet --</option>
-							<?php foreach ($tablet as $t) : ?>
-								<option value="<?= $t->imei_tab; ?>"><?= $t->imei_tab; ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="nip_pegawai">NIP Pegawai</label>
-						<select name="nip_pegawai" class="form-control" required>
-							<option value="">-- Pilih NIP Pegawai --</option>
-							<?php foreach ($pegawai as $p) : ?>
-								<option value="<?= $p->nip_pegawai; ?>"><?= $p->nip_pegawai; ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>
-
+                    <div class="form-group">
+                        <label for="imei_tab">IMEI Tablet</label>
+                        <input type="text" name="imei_tab" value="<?= isset($t->imei_tab) ? $t->imei_tab : '' ?>" class="form-control" id="imei_tab" placeholder="IMEI Tab" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imei_tab">NIP Pegawai</label>
+                        <input type="text" name="nip_pegawai" value="<?= isset($t->nip_pegawai) ? $t->nip_pegawai : '' ?>" class="form-control" id="nip_pegawai" placeholder="NIP Pegawai" required>
+                    </div>
 					<div class="form-group">
                         <label for="exampleInputEmail1">Tanggal BAST</label>
                         <input type="date" name="tanggal_bast" class="form-control" id="exampleInputEmail1" placeholder="Nama" required>
