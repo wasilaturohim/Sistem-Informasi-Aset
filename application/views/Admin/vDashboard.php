@@ -99,7 +99,43 @@
                 <!-- Main row -->
                 <div class="row">
                     <div class="col-md-8">
+                        <?php
+                        $ch = curl_init();
+
+                        $token = $this->session->userdata('token');
+                        $apiUrl = $this->config->item('api_url') . '/user/me';
+
+                        curl_setopt($ch, CURLOPT_URL, ($apiUrl));
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                            'Authorization: Bearer ' . $token,
+                            'Content-Type: application/json'
+                        ]);
+
+                        $response = curl_exec($ch);
+                        curl_close($ch);
+
+                        $user = json_decode($response, true);
+
+                        $name = isset($user['name']) ? $user['name'] : 'Guest';
+                        $username = isset($user['username']) ? $user['username'] : 'Guest';
+                        $role = isset($user['role']) ? $user['role'] : 'Guest';
+                        if ($role === 'VIEWER') {
+                            $role_display = 'USER';
+                        } elseif ($role === 'ADMIN') {
+                            $role_display = 'ADMIN';
+                        } elseif ($role === 'SUPER') {
+                            $role_display = 'SUPER';
+                        } else {
+                            $role_display = 'Guest';
+                        }
+                        ?>
                         <!-- MAP & BOX PANE -->
+                        <div class="info">
+                            <br>
+                            <h4 href="#" class="d-block">Selamat Datang, <?php echo htmlspecialchars($name); ?></h4>
+                            <h4 href="#" class="d-block">Kamu Login sebagai <?php echo htmlspecialchars($role_display); ?></h4>
+                        </div>
                     </div>
                 </div>
             </div>
