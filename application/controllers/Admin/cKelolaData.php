@@ -8,12 +8,13 @@ class cKelolaData extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        is_logged_in();
     }
 
 
     public function pegawai()
     {
-        $token = $this->session->userdata('token'); 
+        $token = $this->session->userdata('token');
         $apiUrl = $this->config->item('api_url') . '/pegawai/';
 
         $headers = array(
@@ -30,7 +31,7 @@ class cKelolaData extends CI_Controller
 
         $pegawaiData = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($pegawaiData)) {
-            $pegawaiData = []; 
+            $pegawaiData = [];
         }
 
         $data = array(
@@ -63,7 +64,7 @@ class cKelolaData extends CI_Controller
 
         $tabletData = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($tabletData)) {
-            $tabletData = []; 
+            $tabletData = [];
         }
 
         $data = array(
