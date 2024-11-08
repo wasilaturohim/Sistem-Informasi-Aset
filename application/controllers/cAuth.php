@@ -40,14 +40,24 @@ class cAuth extends CI_Controller
             if ($statusCode == 200) {
                 $authData = json_decode($response);
 
-                // Save token and user ID to session
+                // Save token, user ID, and role to session
                 $this->session->set_userdata(array(
                     'id' => $authData->id,
-                    'token' => $authData->token
+                    'token' => $authData->token,
+                    'role' => $authData->role
                 ));
 
                 // Redirect based on user role
-                redirect(base_url('Admin/cDashboard'));
+                if ($authData->role === 'SUPER') {
+                    redirect(base_url('Super/cDashboard'));
+                } elseif ($authData->role === 'ADMIN') {
+                    redirect(base_url('Admin/cDashboard'));
+                } elseif ($authData->role === 'VIEWER') {
+                    redirect(base_url('User/cDashboard'));
+                } else {
+                    $this->session->set_flashdata('error', 'Role tidak dikenali!');
+                    redirect('cAuth');
+                }
             } else {
                 $this->session->set_flashdata('error', 'Username atau Password Salah!');
                 redirect('cAuth');

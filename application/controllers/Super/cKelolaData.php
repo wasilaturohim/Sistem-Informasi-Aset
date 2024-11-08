@@ -38,10 +38,10 @@ class cKelolaData extends CI_Controller
             'pegawai' => json_decode($response, true)
         );
 
-        $this->load->view('User/Layout/head');
-        $this->load->view('User/Layout/aside');
-        $this->load->view('User/Pegawai/vpegawai', $data);
-        $this->load->view('User/Layout/footer');
+        $this->load->view('Super/Layout/head');
+        $this->load->view('Super/Layout/aside');
+        $this->load->view('Super/Pegawai/vpegawai', $data);
+        $this->load->view('Super/Layout/footer');
     }
 
     //device
@@ -71,10 +71,10 @@ class cKelolaData extends CI_Controller
             'tablet' => json_decode($response, true)
         );
 
-        $this->load->view('User/Layout/head');
-        $this->load->view('User/Layout/aside');
-        $this->load->view('User/Tablet/vtablet', $data);
-        $this->load->view('User/Layout/footer');
+        $this->load->view('Super/Layout/head');
+        $this->load->view('Super/Layout/aside');
+        $this->load->view('Super/Tablet/vtablet', $data);
+        $this->load->view('Super/Layout/footer');
     }
 
     //user
@@ -99,10 +99,10 @@ class cKelolaData extends CI_Controller
             'user' => json_decode($response)
         );
 
-        $this->load->view('User/Layout/head');
-        $this->load->view('User/Layout/aside');
-        $this->load->view('User/user/vuser', $data);
-        $this->load->view('User/Layout/footer');
+        $this->load->view('Super/Layout/head');
+        $this->load->view('Super/Layout/aside');
+        $this->load->view('Super/user/vuser', $data);
+        $this->load->view('Super/Layout/footer');
     }
 
     public function createuser()
@@ -138,7 +138,7 @@ class cKelolaData extends CI_Controller
             $this->session->set_flashdata('error', 'Gagal menyimpan data user. Silakan coba lagi.');
         }
 
-        redirect('User/cKelolaData/user');
+        redirect('Super/cKelolaData/user');
     }
 
     public function updateuser($id)
@@ -174,7 +174,7 @@ class cKelolaData extends CI_Controller
             $this->session->set_flashdata('error', 'Gagal mengupdate data user. Silakan coba lagi.');
         }
 
-        redirect('User/cKelolaData/user');
+        redirect('Super/cKelolaData/user');
     }
 
     public function deleteuser($id)
@@ -200,7 +200,7 @@ class cKelolaData extends CI_Controller
             $this->session->set_flashdata('error', 'Gagal menghapus data user. Silakan coba lagi.');
         }
 
-        redirect('User/cKelolaData/user');
+        redirect('Super/cKelolaData/user');
     }
 
     //transaksi
@@ -231,10 +231,10 @@ class cKelolaData extends CI_Controller
             'transaksi' => json_decode($response, true)
         );
 
-        $this->load->view('User/Layout/head');
-        $this->load->view('User/Layout/aside');
-        $this->load->view('User/Transaksi/vtransaksi', $data);
-        $this->load->view('User/Layout/footer');
+        $this->load->view('Super/Layout/head');
+        $this->load->view('Super/Layout/aside');
+        $this->load->view('Super/Transaksi/vtransaksi', $data);
+        $this->load->view('Super/Layout/footer');
     }
 
     public function createtransaksi()
@@ -271,7 +271,7 @@ class cKelolaData extends CI_Controller
             $this->session->set_flashdata('error', 'Gagal menyimpan data transaksi. Silakan coba lagi.');
         }
 
-        redirect('User/cKelolaData/transaksi');
+        redirect('Super/cKelolaData/transaksi');
     }
 
     public function updatetransaksi($id_transaksi)
@@ -308,7 +308,7 @@ class cKelolaData extends CI_Controller
             $this->session->set_flashdata('error', 'Gagal mengupdate data transaksi. Silakan coba lagi.');
         }
 
-        redirect('User/cKelolaData/transaksi');
+        redirect('Super/cKelolaData/transaksi');
     }
 
     public function deletetransaksi($id_transaksi)
@@ -335,7 +335,7 @@ class cKelolaData extends CI_Controller
             $this->session->set_flashdata('error', 'Gagal menghapus data transaksi. Silakan coba lagi.');
         }
 
-        redirect('User/cKelolaData/transaksi');
+        redirect('Super/cKelolaData/transaksi');
     }
 }
 

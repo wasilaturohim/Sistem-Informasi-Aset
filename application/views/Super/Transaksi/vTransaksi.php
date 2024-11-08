@@ -35,6 +35,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-default">
+                        <i class="fas fa-list"></i> Tambah Data Transaksi
+                    </button>
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Informasi Transaksi</h3>
@@ -53,6 +56,7 @@
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Kondisi</th>
                                         <th class="text-center">Tanggal Pensiun</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,6 +105,13 @@
                                                 </td>
 
                                                 <td class="text-center"><?= htmlspecialchars($tmtPegawai) ?></td>
+
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="<?= base_url('Super/cKelolaData/deletetransaksi/' . $value['id_transaksi']) ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <button type="button" data-toggle="modal" data-target="#edit<?= $value['id_transaksi'] ?>" class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                                                    </div>
+                                                </td>
                                             </tr>
                                     <?php
                                         }
@@ -121,6 +132,7 @@
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Kondisi</th>
                                         <th class="text-center">Tanggal Pensiun</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -137,12 +149,72 @@
     </section>
     <!-- /.content -->
 </div>
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <form action="<?= base_url('super/ckeloladata/createtransaksi') ?>" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Data Transaksi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">IMEI Device</label>
+                        <input type="text" name="imei_tab" class="form-control" id="exampleInputEmail1" placeholder="IMEI Device" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">NIP Pegawai</label>
+                        <input type="text" name="nip_pegawai" class="form-control" id="exampleInputEmail1" placeholder="NIP Pegawai" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tanggal BAST</label>
+                        <input type="date" name="tanggal_bast" class="form-control" id="exampleInputEmail1" placeholder="Nama" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Transaksi</label>
+                        <select class="form-control" name="transaksi" required>
+                            <option value="">--Pilih Transaksi---</option>
+                            <option value="PENERIMAAN">PENERIMAAN</option>
+                            <option value="PENGEMBALIAN">PENGEMBALIAN</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Status</label>
+                        <select class="form-control" name="status" required>
+                            <option value="">--Pilih Status---</option>
+                            <option value="LENGKAP">LENGKAP</option>
+                            <option value="TIDAK_LENGKAP">TIDAK LENGKAP</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kondisi</label>
+                        <select class="form-control" name="kondisi" required>
+                            <option value="">--Pilih Kondisi---</option>
+                            <option value="BERFUNGSI">BERFUNGSI</option>
+                            <option value="TIDAK_BERFUNGSI">TIDAK BERFUNGSI</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <?php
 foreach ($transaksi as $key => $value) {
 ?>
     <div class="modal fade" id="edit<?= $value['id_transaksi'] ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <form action="<?= base_url('user/ckeloladata/updatetransaksi/' . $value['id_transaksi']) ?>" method="POST">
+            <form action="<?= base_url('super/ckeloladata/updatetransaksi/' . $value['id_transaksi']) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Update Data Transaksi</h4>

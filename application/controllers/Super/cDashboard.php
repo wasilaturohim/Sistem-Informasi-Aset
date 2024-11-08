@@ -48,10 +48,10 @@ class cDashboard extends CI_Controller
         ];
 
         // Tampilkan view dengan data
-        $this->load->view('User/Layout/head');
-        $this->load->view('User/Layout/aside');
-        $this->load->view('User/vDashboard', $data);
-        $this->load->view('User/Layout/footer');
+        $this->load->view('Super/Layout/head');
+        $this->load->view('Super/Layout/aside');
+        $this->load->view('Super/vDashboard', $data);
+        $this->load->view('Super/Layout/footer');
     }
 }
 
