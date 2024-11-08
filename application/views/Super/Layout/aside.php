@@ -70,7 +70,7 @@
                                                                                                         echo 'active';
                                                                                                     }  ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Tablet</p>
+                                <p>Device</p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -51,6 +51,7 @@
                                         <th class="text-center">Imei Tablet</th>
                                         <th class="text-center">NIP Pegawai</th>
                                         <th class="text-center">Nama Pegawai</th>
+                                        <th class="text-center">Satuan Kerja</th>
                                         <th class="text-center">Tanggal BAST</th>
                                         <th class="text-center">Transaksi</th>
                                         <th class="text-center">Status</th>
@@ -66,6 +67,7 @@
                                         foreach ($transaksi as $key => $value) {
                                             $formattedDate = $value['tanggal_bast'] ? date("d-m-Y", strtotime($value['tanggal_bast'])) : '-';
                                             $namaPegawai = isset($value['pegawai']['nama_pegawai']) ? $value['pegawai']['nama_pegawai'] : '-';
+                                            $satkerPegawai = isset($value['pegawai']['satker_1']) ? $value['pegawai']['satker_1'] : '-';
                                             $tmtPegawai = isset($value['pegawai']['tmt']) ? date("d-m-Y", strtotime($value['pegawai']['tmt'])) : '-';
 
                                     ?>
@@ -74,6 +76,7 @@
                                                 <td class="text-center"><?= htmlspecialchars($value['imei_tab']) ?></td>
                                                 <td class="text-center"><?= htmlspecialchars($value['nip_pegawai']) ?></td>
                                                 <td class="text-center"><?= htmlspecialchars($namaPegawai) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($satkerPegawai) ?></td>
                                                 <td class="text-center"><?= htmlspecialchars($formattedDate) ?></td>
 
                                                 <td class="text-center">
@@ -127,6 +130,7 @@
                                         <th class="text-center">Imei Tablet</th>
                                         <th class="text-center">NIP Pegawai</th>
                                         <th class="text-center">Nama Pegawai</th>
+                                        <th class="text-center">Satuan Kerja</th>
                                         <th class="text-center">Tanggal BAST</th>
                                         <th class="text-center">Transaksi</th>
                                         <th class="text-center">Status</th>

@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Tablet</h1>
+                    <h1>Data Device</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Tablet</li>
+                        <li class="breadcrumb-item active">Device</li>
                     </ol>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Informasi Data Tablet</h3>
+                            <h3 class="card-title">Informasi Data Device</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -42,7 +42,7 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Imei</th>
-                                        <th class="text-center">Nama Tablet/Device</th>
+                                        <th class="text-center">Nama Device</th>
                                         <th class="text-center">No BMN</th>
                                     </tr>
                                 </thead>
@@ -69,7 +69,7 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Imei</th>
-                                        <th class="text-center">Nama Tablet/Device</th>
+                                        <th class="text-center">Nama Device</th>
                                         <th class="text-center">No BMN</th>
                                     </tr>
                                 </tfoot>
